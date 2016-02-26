@@ -1,0 +1,17 @@
+{
+  "name": "telegramBotBotHandler",
+  "version": "1.0.0",
+  "description": "Helper to create a Telegram Bot with the keyboard as interaction method",
+  "author": {
+    "email": "edjopato@gmail.com",
+    "name": "Edgar To"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.20.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EdJoPaTo/telegramBotBotHandler.git"
+  }
+}
