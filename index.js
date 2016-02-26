@@ -1,13 +1,6 @@
 const fs = require('fs');
 var TelegramBot = require('node-telegram-bot-api');
 
-function isFunction(functionToCheck) {
- var getType = {};
- console.log(functionToCheck);
- console.log(getType.toString.call(functionToCheck));
- return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
-
 var BotHandler = function (tokenFilePath) {
   var token = fs.readFileSync(tokenFilePath, "utf8").trim();
   this.bot = new TelegramBot(token, {polling: true});
@@ -40,9 +33,7 @@ BotHandler.prototype.sendText = function (chat, text, callback, keyboardKeys) {
 
   if (type === 'object' ) {
     var columns = keyboardKeys;
-
     var keys = this.arrayToKeyboard(Object.keys(callback), columns);
-    console.log(keys);
 
     this._currentHandlerList[chat.id] = callback;
     this.bot.sendMessage(chat.id, text, { reply_markup: JSON.stringify({ keyboard: keys }) });
