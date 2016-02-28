@@ -46,15 +46,15 @@ BotHandler.prototype.sendText = function (chat, text, callback, keyboardKeys) {
     var keys = this.arrayToKeyboard(Object.keys(callback), columns);
 
     this._currentHandlerList[chat.id] = callback;
-    this.bot.sendMessage(chat.id, text, { reply_markup: JSON.stringify({ keyboard: keys }) });
+    this.bot.sendMessage(chat.id, text, { parse_mode: "Markdown", reply_markup: JSON.stringify({ keyboard: keys }) });
   } else if (type === 'function' && keyboardKeys) {
     this._currentHandler[chat.id] = callback;
-    this.bot.sendMessage(chat.id, text, { reply_markup: JSON.stringify({ keyboard: keyboardKeys }) });
+    this.bot.sendMessage(chat.id, text, { parse_mode: "Markdown", reply_markup: JSON.stringify({ keyboard: keyboardKeys }) });
   } else if (type === 'function') {
     this._currentHandler[chat.id] = callback;
-    this.bot.sendMessage(chat.id, text, { reply_markup: JSON.stringify({ force_reply: true }) });
+    this.bot.sendMessage(chat.id, text, { parse_mode: "Markdown", reply_markup: JSON.stringify({ force_reply: true }) });
   } else {
-    this.bot.sendMessage(chat.id, text, { reply_markup: JSON.stringify({ hide_keyboard: true }) });
+    this.bot.sendMessage(chat.id, text, { parse_mode: "Markdown", reply_markup: JSON.stringify({ hide_keyboard: true }) });
     if (chat.id > 0) {
       setTimeout(function(botHandler, chat) {
         botHandler.sendMainMenu(chat);
