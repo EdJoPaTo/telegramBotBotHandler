@@ -1,6 +1,6 @@
 {
   "name": "telegramBotBotHandler",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Helper to create a Telegram Bot with the keyboard as interaction method",
   "author": {
     "email": "edjopato@gmail.com",

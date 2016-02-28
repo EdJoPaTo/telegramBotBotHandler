@@ -8,21 +8,31 @@ var BotHandler = function (tokenFilePath) {
   this._currentHandlerList = {};
   var botHandler = this;
 
-  this.bot.onText(/.+/, function(msg) {
+  this.bot.onText(/^(?!\/).+$/, function(msg) {
     if (botHandler._currentHandler[msg.chat.id]) {
       botHandler._currentHandler[msg.chat.id](msg);
     } else if (botHandler._currentHandlerList[msg.chat.id] && botHandler._currentHandlerList[msg.chat.id][msg.text]) {
       botHandler._currentHandlerList[msg.chat.id][msg.text](msg);
-    } else if (botHandler.mainMenu) {
-      botHandler.mainMenu(msg.chat);
+    } else if (botHandler._mainMenuOptions && botHandler._mainMenuOptions(msg.chat)[msg.text]) {
+      botHandler._mainMenuOptions(msg.chat)[msg.text](msg);
     } else {
       console.log("unhandled message: " + JSON.stringify(msg));
     }
   });
-}
+};
 
-BotHandler.prototype.setMainMenu = function (callback) {
-  this.mainMenu = callback;
+BotHandler.prototype.setMainMenuText = function (callback) {
+  this._mainMenuText = callback;
+};
+
+BotHandler.prototype.setMainMenuOptions = function (callback) {
+  this._mainMenuOptions = callback;
+};
+
+BotHandler.prototype.onCommand = function (command, arguments, callback) {
+  var regex = new RegExp("^\\/" + command + "(?:@\\S+)?" + (arguments ? " ([\\s\\S]+)" : "") + "$", "i");
+
+  this.bot.onText(regex, callback);
 };
 
 BotHandler.prototype.sendText = function (chat, text, callback, keyboardKeys) {
@@ -54,9 +64,10 @@ BotHandler.prototype.sendText = function (chat, text, callback, keyboardKeys) {
 };
 
 BotHandler.prototype.sendMainMenu = function(chat) {
-  delete this._currentHandler[chat.id];
-  delete this._currentHandlerList[chat.id];
-  this.mainMenu(chat);
+  var text = this._mainMenuText(chat);
+  var options = this._mainMenuOptions(chat);
+
+  this.sendText(chat, text, options);
 };
 
 BotHandler.prototype.arrayToKeyboard = function(array, columns) {
@@ -81,6 +92,6 @@ BotHandler.prototype.arrayToKeyboard = function(array, columns) {
   }
 
   return result;
-}
+};
 
 module.exports = BotHandler;
