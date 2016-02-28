@@ -60,5 +60,5 @@ Send the `text` to the chat. This will clear any reply_markup (force_reply/ keyb
 ### botHandler.sendMainMenu(chat)
 Send the mainmenu to the `chat`. This will cancel other callbacks.
 
-### botHandler.arrayToKeyboard(array, [columns])
-Build a single dimension `array` into a keyboard. `columns` default is 2.
+### botHandler.arrayToKeyboard(array, [columns, [optimizeColumns]])
+Build a single dimension `array` into a keyboard. `columns` default is 2. if `optimizeColumns` is true, the `columns` can be reduced if only a few `array` entries exist.

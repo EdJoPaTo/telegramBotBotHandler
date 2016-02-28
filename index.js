@@ -70,10 +70,14 @@ BotHandler.prototype.sendMainMenu = function(chat) {
   this.sendText(chat, text, options);
 };
 
-BotHandler.prototype.arrayToKeyboard = function(array, columns) {
+BotHandler.prototype.arrayToKeyboard = function(array, columns, optimizeColumns) {
   if (!columns) {
     columns = 2;
   }
+  while (optimizeColumns && array.length / columns <= columns - 1 && columns > 2) {
+    columns -= 1;
+  }
+
   var result = [];
   var tmp = [];
   var curColumn = 0;
