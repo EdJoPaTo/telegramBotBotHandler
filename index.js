@@ -8,7 +8,7 @@ var BotHandler = function (tokenFilePath) {
   this._currentHandlerList = {};
   var botHandler = this;
 
-  this.bot.onText(/^(?!\/).+$/, function(msg) {
+  this.bot.onText(/^(?!\/)[\s\S]*$/, function(msg) {
     if (botHandler._currentHandler[msg.chat.id]) {
       botHandler._currentHandler[msg.chat.id](msg);
     } else if (botHandler._currentHandlerList[msg.chat.id] && botHandler._currentHandlerList[msg.chat.id][msg.text]) {
