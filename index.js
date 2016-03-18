@@ -17,6 +17,10 @@ var BotHandler = function (tokenFilePath) {
       botHandler._mainMenuOptions(msg.chat)[msg.text](msg);
     } else {
       console.log("unhandled message: " + JSON.stringify(msg));
+      if (botHandler._unhandledMessageAnswerText) {
+        var text = botHandler._unhandledMessageAnswerText(msg);
+        botHandler.sendText(msg.chat, text);
+      }
     }
   });
 };
@@ -33,6 +37,10 @@ BotHandler.prototype.onCommand = function (command, args, callback) {
   var regex = new RegExp("^\\/" + command + "(?:@\\S+)?" + (args ? " ([\\s\\S]+)" : "") + "$", "i");
 
   this.bot.onText(regex, callback);
+};
+
+BotHandler.prototype.setUnhandledMessageAnswerText = function (callback) {
+  this._unhandledMessageAnswerText = callback;
 };
 
 BotHandler.prototype.sendText = function (chat, text, callback, keyboardKeys) {

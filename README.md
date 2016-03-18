@@ -48,6 +48,9 @@ load the token from the given file path and start the bot (polling).
 ### botHandler.onCommand(command, arguments, function(msg, match) {})
 `function` will be triggered when the user sends the given command. `arguments` is true if the command must have arguments, false if not.
 
+### botHandler.setUnhandledMessageAnswerText(function(msg) { ...; return string; })
+`function` will be triggered when a user `msg` is not recognized. The return string will be send to the user. In direct chats (not groups) the mainmenu will trigger after 500ms.
+
 ### botHandler.sendText(chat, text, userOptions, [columns])
 Send the `text` to the `chat`. The user will get the keys as keyboard in n `columns` (default 2). The answer of the user trigger the `function`. If the user type manual another answer the mainmenu will be send.
 
