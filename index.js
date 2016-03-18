@@ -29,8 +29,8 @@ BotHandler.prototype.setMainMenuOptions = function (callback) {
   this._mainMenuOptions = callback;
 };
 
-BotHandler.prototype.onCommand = function (command, arguments, callback) {
-  var regex = new RegExp("^\\/" + command + "(?:@\\S+)?" + (arguments ? " ([\\s\\S]+)" : "") + "$", "i");
+BotHandler.prototype.onCommand = function (command, args, callback) {
+  var regex = new RegExp("^\\/" + command + "(?:@\\S+)?" + (args ? " ([\\s\\S]+)" : "") + "$", "i");
 
   this.bot.onText(regex, callback);
 };
@@ -84,7 +84,7 @@ BotHandler.prototype.arrayToKeyboard = function(array, columns, optimizeColumns)
 
   for (var i = 0; i < array.length; i++) {
     curColumn = i % columns;
-    if (curColumn == 0 && i != 0) {
+    if (curColumn === 0 && i !== 0) {
       result.push(tmp);
       tmp = [];
     }
