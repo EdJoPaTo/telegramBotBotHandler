@@ -3,7 +3,7 @@
 ## Example Bot
 
 ```js
-var bot = new BotHandler("token.txt");
+const bot = new BotHandler("token.txt");
 
 bot.setMainMenuText(function (chat) { return "What do you want to do?"; });
 

@@ -1,12 +1,12 @@
 const fs = require('fs');
-var TelegramBot = require('node-telegram-bot-api');
+const TelegramBot = require('node-telegram-bot-api');
 
-var BotHandler = function (tokenFilePath) {
-  var token = fs.readFileSync(tokenFilePath, "utf8").trim();
+const BotHandler = function (tokenFilePath) {
+  const token = fs.readFileSync(tokenFilePath, "utf8").trim();
   this.bot = new TelegramBot(token, {polling: true});
   this._currentHandler = {};
   this._currentHandlerList = {};
-  var botHandler = this;
+  const botHandler = this;
 
   this.bot.onText(/^(?!\/)[\s\S]*$/, function(msg) {
     if (botHandler._currentHandler[msg.chat.id]) {
@@ -18,7 +18,7 @@ var BotHandler = function (tokenFilePath) {
     } else {
       console.log("unhandled message: " + JSON.stringify(msg));
       if (botHandler._unhandledMessageAnswerText) {
-        var text = botHandler._unhandledMessageAnswerText(msg);
+        const text = botHandler._unhandledMessageAnswerText(msg);
         botHandler.sendText(msg.chat, text);
       }
     }
@@ -34,7 +34,7 @@ BotHandler.prototype.setMainMenuOptions = function (callback) {
 };
 
 BotHandler.prototype.onCommand = function (command, args, callback) {
-  var regex = new RegExp("^\\/" + command + "(?:@\\S+)?" + (args ? " ([\\s\\S]+)" : "") + "$", "i");
+  const regex = new RegExp("^\\/" + command + "(?:@\\S+)?" + (args ? " ([\\s\\S]+)" : "") + "$", "i");
 
   this.bot.onText(regex, callback);
 };
@@ -44,14 +44,14 @@ BotHandler.prototype.setUnhandledMessageAnswerText = function (callback) {
 };
 
 BotHandler.prototype.sendText = function (chat, text, callback, keyboardKeys) {
-  var type = typeof callback;
+  const type = typeof callback;
 
   delete this._currentHandler[chat.id];
   delete this._currentHandlerList[chat.id];
 
   if (type === 'object' ) {
-    var columns = keyboardKeys;
-    var keys = this.arrayToKeyboard(Object.keys(callback), columns);
+    const columns = keyboardKeys;
+    const keys = this.arrayToKeyboard(Object.keys(callback), columns);
 
     this._currentHandlerList[chat.id] = callback;
     this.bot.sendMessage(chat.id, text, { parse_mode: "Markdown", reply_markup: JSON.stringify({ keyboard: keys }) });
@@ -72,8 +72,8 @@ BotHandler.prototype.sendText = function (chat, text, callback, keyboardKeys) {
 };
 
 BotHandler.prototype.sendMainMenu = function(chat) {
-  var text = this._mainMenuText(chat);
-  var options = this._mainMenuOptions(chat);
+  const text = this._mainMenuText(chat);
+  const options = this._mainMenuOptions(chat);
 
   this.sendText(chat, text, options);
 };
@@ -86,11 +86,11 @@ BotHandler.prototype.arrayToKeyboard = function(array, columns, optimizeColumns)
     columns -= 1;
   }
 
-  var result = [];
-  var tmp = [];
-  var curColumn = 0;
+  const result = [];
+  let tmp = [];
+  let curColumn = 0;
 
-  for (var i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     curColumn = i % columns;
     if (curColumn === 0 && i !== 0) {
       result.push(tmp);
