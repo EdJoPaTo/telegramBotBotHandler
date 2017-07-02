@@ -1,17 +1,22 @@
 {
-  "name": "telegramBotBotHandler",
-  "version": "2.2.0",
+  "name": "telegrambotbothandler",
+  "version": "2.2.1",
   "description": "Helper to create a Telegram Bot with the keyboard as interaction method",
-  "author": {
-    "email": "edjopato@gmail.com",
-    "name": "Edgar To"
-  },
+  "author": "edjopato@gmail.com",
   "main": "index.js",
   "dependencies": {
-    "node-telegram-bot-api": "^0.20.1"
+    "node-telegram-bot-api": "^0.27.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/EdJoPaTo/telegramBotBotHandler.git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/EdJoPaTo/telegramBotBotHandler/issues"
+  },
+  "homepage": "https://github.com/EdJoPaTo/telegramBotBotHandler#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT"
 }
